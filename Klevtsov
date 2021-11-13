@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication47
+{
+    class hotel
+    {
+        public string Hotel;
+        public int Stars;
+        public string Descr;
+        public country hotelCountry;
+        public hotel(string Hotel, int Stars, string Descr, country hotelCountry)
+        {
+            this.Hotel = Hotel;
+            this.Stars = Stars;
+            this.Descr = Descr;
+            this.hotelCountry = hotelCountry;
+        }
+        public hotel()
+        {
+
+        }
+    }
+    class country
+    {
+        public string Country;
+        public string Capital;
+        public country(string Country, string Capital)
+        {
+            this.Country = Country;
+            this.Capital = Capital;
+        }
+        public country()
+        {
+
+        }
+    }
+    class Program
+    {
+        static void AddCountry(List<country> countryList)
+        {
+            string Name, Capital;
+            Console.Write("Введите страну: ");
+            Name = Console.ReadLine();
+            Console.Write("Введите столицу: ");
+            Capital = Console.ReadLine();
+            countryList.Add(new country(Name, Capital));
+        }
+        static void AddHotel(List<hotel> hotelList, List<country> countryList)
+        {
+            string Hotel, Descr, hotelCountry;
+            int Stars;
+            country selectedCountry = null;
+            Console.Write("Введите название отеля: ");
+            Hotel = Console.ReadLine();
+            Console.Write("Введите количество звёзд: ");
+            Stars = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите описание: ");
+            Descr = Console.ReadLine();
+            Console.Write("Введите страну: ");
+            hotelCountry = Console.ReadLine();
+            foreach (country c in countryList)
+            {
+                if (hotelCountry == c.Country)
+                {
+                    selectedCountry = c;
+                    break;
+                }
+            }
+            if (selectedCountry == null)
+            {
+                return;
+            }
+            hotelList.Add(new hotel(Hotel, Stars, Descr, selectedCountry));
+        }
+        static void Countries(List<country> countryList)
+        {
+            foreach (country d in countryList)
+            {
+                Console.Write("Страна: ");
+                Console.WriteLine(d.Country);
+                Console.Write("Столица: ");
+                Console.WriteLine(d.Capital);
+            }
+        }
+        static void Hotels(List<hotel> hotelList, List<country> countryList)
+        {
+            foreach (hotel e in hotelList)
+            {
+                Console.Write("Название отеля: ");
+                Console.WriteLine(e.Hotel);
+                Console.Write("Количество звёзд: ");
+                Console.WriteLine(e.Stars);
+                Console.Write("Описание: ");
+                Console.WriteLine(e.Descr);
+                Console.Write("Страна: ");
+                Console.WriteLine(e.hotelCountry);
+            }
+        }
+        static void Main(string[] args)
+        {
+            List<hotel> hotelList = new List<hotel>();
+            List<country> countryList = new List<country>();
+            int x = 0;
+            while (x != 4)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Меню");
+                Console.WriteLine("1 Добавить страны");
+                Console.WriteLine("2 Добавить отеля");
+                Console.WriteLine("3 Вывод стран");
+                Console.WriteLine("4 Вывод отелей");
+                Console.WriteLine();
+                int num = Convert.ToInt32(Console.ReadLine());
+                switch (num)
+                {
+                    case 1:
+                        AddCountry(countryList);
+                        break;
+                    case 2:
+                        AddHotel(hotelList, countryList);
+                        break;
+                    case 3:
+                        Countries(countryList);
+                        break;
+                    case 4:
+                        Hotels(hotelList, countryList);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
